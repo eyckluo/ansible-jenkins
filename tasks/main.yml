@@ -1,0 +1,18 @@
+---
+#download binary file if not exist in local
+- name: download jenkins war
+  get_url:
+    src: http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+    dest: /opt/apps/jenkins/
+
+#configure
+#stop application if exist
+
+#start configuration
+- name: start jenkins
+  command: java -jar /opt/apps/jenkins/jenkins.war --httpPort=9090
+
+- name: wait 10 seconds for port 8080 available
+  wait_for:
+    port: 9090
+    timeout: 10
